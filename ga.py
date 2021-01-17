@@ -1,2 +1,12 @@
 def run(problem, params):
-    return None
+
+    #Problem Information
+    costfunc = problem.costfunc
+    nvar = problem.nvar
+    varmin = problem.varmin
+    varmax = problem.varmax
+
+    #Parameters
+    maxit = params.maxit
+    npop = params.npop
+    
