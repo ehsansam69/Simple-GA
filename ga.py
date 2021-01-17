@@ -12,6 +12,8 @@ def run(problem, params):
     #Parameters
     maxit = params.maxit
     npop = params.npop
+    pc = params.pc
+    nc = np.round(pc*npop/2)*2
 
     # empty individual template
 
@@ -34,6 +36,17 @@ def run(problem, params):
 
     # Best cost of itteration
     bestcost = np.empty(maxit)
+
+    # Main Loop, crross over and mutation and have a population of offsprings
+
+    for it in range(maxit):
+
+        popc =[]
+        for k in range(nc//2):
+
+
+
+
 
     # Output
     out = structure()
