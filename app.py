@@ -21,7 +21,7 @@ params.npop = 20
 
 #Run GA
 out = ga.run(problem, params)
-
+print(out.pop)
 #Results
 
 
