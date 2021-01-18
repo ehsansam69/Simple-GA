@@ -15,6 +15,8 @@ def run(problem, params):
     pc = params.pc
     nc = np.round(pc*npop/2)*2
     gamma = params.gamma
+    mu = params.mu
+    sigma = params.sigma
 
     # empty individual template
 
@@ -53,6 +55,10 @@ def run(problem, params):
             c1, c2 = crossover(p1,p2,gamma)
 
             #perform mutation
+            c1 = mutate(c1, mu, sigma)
+            c2 = mutate(c2, mu, sigma)
+
+
 
 
 
@@ -69,6 +75,16 @@ def crossover(p1,p2,gamma =0.1):
     c1.position = alpha*p1.position +(1-alpha)*p2.position
     c2.position = alpha*p2.position +(1-alpha)*p1.position
     return c1,c2
+
+def mutate(x, mu, sigma):
+    y = x.deepcopy()
+    flag = np.random.rand(*x.position.shape) <= mu   #an array of trues and falses
+    ind = np.argwhere(flag) # where flag is true
+    y.position[ind] += sigma*np.random.randn(*ind.shape)  #randn normaly distrubuted number 0 to 1 with sigma
+    return y
+
+
+
 
 
 
