@@ -13,7 +13,7 @@ def run(problem, params):
     maxit = params.maxit
     npop = params.npop
     pc = params.pc
-    nc = np.round(pc*npop/2)*2
+    nc = int(np.round(pc*npop/2)*2)
     gamma = params.gamma
     mu = params.mu
     sigma = params.sigma
@@ -34,10 +34,10 @@ def run(problem, params):
     for i in range(0, npop):
         pop[i].position = np.random.uniform(varmin,varmax, nvar)
         pop[i].cost = costfunc(pop[i].position)
-        if pop[i].cost < bestsol:  # the better solution is the one with less cost
+        if pop[i].cost < bestsol.cost:  # the better solution is the one with less cost
             bestsol = pop[i].deepcopy()
 
-    # Best cost of itteration
+    # Best cost of iteration
     bestcost = np.empty(maxit)
 
     # Main Loop, cross over and mutation and have a population of offsprings
@@ -64,33 +64,37 @@ def run(problem, params):
 
             # Evaluate first offspring
             c1.cost = costfunc(c1.position)
-            if c1.cost < bestsol:
+            if c1.cost < bestsol.cost:
                 bestsol = c1.deepcopy()
 
             # Evaluate second offspring
             c2.cost = costfunc(c2.position)
-            if c2.cost < bestsol:
+            if c2.cost < bestsol.cost:
                 bestsol = c2.deepcopy()
 
             # Add offsprings to population
             popc.append(c1)
             popc.append(c2)
 
-            # Merge, Sort and Select
-            pop += popc
-            pop = sorted(pop, key= lambda x:x.cost)
-            pop = pop[0:npop]
-            
 
+        # Merge, Sort and Select
+        pop += popc
+        pop = sorted(pop, key= lambda x:x.cost)
+        pop = pop[0:npop]
 
+        # Store best cost
+        bestcost[it] = bestsol.cost
 
-
+        #Show iteration information
+        print("Iteration {}: Best Cost {}".format(it, bestcost[it]))
 
 
 
     # Output
     out = structure()
     out.pop = pop
+    out.bestsol = bestsol
+    out.bestcost = bestcost
     return out
 
 #cross over func
