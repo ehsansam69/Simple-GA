@@ -45,7 +45,7 @@ def run(problem, params):
     for it in range(maxit):
 
         popc =[]
-        for k in range(nc//2):
+        for _ in range(nc//2):
             #select parents randomly
             q = np.random.permutation(npop)
             p1 = pop[q[0]]
@@ -61,7 +61,21 @@ def run(problem, params):
             # Apply bound - positions must be in range of varmin and varmax
             apply_bounds(c1, varmin, varmax)
             apply_bounds(c2, varmin, varmax)
-            
+
+            # Evaluate first offspring
+            c1.cost = costfunc(c1.position)
+            if c1.cost < bestsol:
+                bestsol = c1.deepcopy()
+
+            # Evaluate second offspring
+            c2.cost = costfunc(c2.position)
+            if c2.cost < bestsol:
+                bestsol = c2.deepcopy()
+
+            # Add offsprings to population
+            popc.append(c1)
+            popc.append(c2)
+
 
 
 
