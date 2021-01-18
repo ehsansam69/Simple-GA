@@ -76,6 +76,12 @@ def run(problem, params):
             popc.append(c1)
             popc.append(c2)
 
+            # Merge, Sort and Select
+            pop += popc
+            pop = sorted(pop, key= lambda x:x.cost)
+            pop = pop[0:npop]
+            
+
 
 
 
