@@ -58,6 +58,12 @@ def run(problem, params):
             c1 = mutate(c1, mu, sigma)
             c2 = mutate(c2, mu, sigma)
 
+            # Apply bound - positions must be in range of varmin and varmax
+            apply_bounds(c1, varmin, varmax)
+            apply_bounds(c2, varmin, varmax)
+            
+
+
 
 
 
@@ -82,6 +88,12 @@ def mutate(x, mu, sigma):
     ind = np.argwhere(flag) # where flag is true
     y.position[ind] += sigma*np.random.randn(*ind.shape)  #randn normaly distrubuted number 0 to 1 with sigma
     return y
+
+def apply_bounds(x, varmin, varmax):
+    x.position = np.maximum(x.position, varmin)  # the result of this expression is always greater or equal to varmin
+    x.position = np.minimum(x.position, varmax)
+
+
 
 
 
